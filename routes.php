@@ -1,4 +1,8 @@
 <?php
+require_once 'includes/connection.php';
+require_once 'controllers/AuthController.php';
+$authController = new AuthController($db);
+
 $page = $_GET['page'] ?? 'home';
 switch ($page) {
     case 'home':
@@ -8,6 +12,7 @@ switch ($page) {
         include 'views/login.php';
         break;
     case 'register':
+        $authController->register();
         include 'views/register.php';
         break;
     default:
