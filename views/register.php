@@ -1,3 +1,10 @@
+<?php
+if (isset($_SESSION['user_id'])) {
+    header('Location: index.php?page=dashboard');
+    exit;
+}
+?>
+
 <div class="font-[sans-serif]">
     <div class="min-h-screen flex fle-col items-center justify-center py-6 px-4 mx-auto">
         <div class="flex flex-row items-center justify-around gap-6 max-w-6xl w-full">
@@ -83,7 +90,7 @@
                         const password = passwordInput.value;
 
                         if (password.length < 8) {
-                            alert('Password must be at least 8 characters long.');
+                            showToast('error', 'Password must be at least 8 characters long.');
                             passwordInput.focus();
                             event.preventDefault();
                             return;
@@ -95,7 +102,7 @@
                         const hasSpecialChar = /[!@#$%^&*]/.test(password);
 
                         if (!(hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar)) {
-                            alert('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+                            showToast('error', 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
                             passwordInput.focus();
                             event.preventDefault();
                             return;
@@ -135,7 +142,7 @@
                         const confirmPassword = confirmPasswordInput.value;
 
                         if (!email || !password || !confirmPassword) {
-                            alert('Please fill in all fields.');
+                            showToast('error', 'Please fill in all fields.');
                             event.preventDefault();
                             return;
                         }
@@ -143,7 +150,7 @@
                         passwordValidator();
 
                         if (password !== confirmPassword) {
-                            alert('Passwords do not match.');
+                            showToast('error', 'Passwords do not match.');
                             confirmPasswordInput.focus();
                             event.preventDefault();
                         }

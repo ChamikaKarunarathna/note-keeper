@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +24,7 @@ session_start();
 
     <main>
         <!-- Toast container -->
-        <div id="toast-container" class="fixed bottom-5 right-5 z-50"></div>
+        <div id="toast-container" class="fixed bottom-5 md:right-5 z-50"></div>
         <?php require './routes.php' ?>
     </main>
 

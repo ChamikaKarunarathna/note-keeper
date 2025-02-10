@@ -9,6 +9,24 @@ class User
         $this->db = $db;
     }
 
+    public function login($email, $password)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['password'])) {
+                return $user;
+            }
+            return false;
+        } catch (PDOException $e) {
+            echo "Error logging in: " . $e->getMessage();
+            return false;
+        }
+    }
+
     public function register($email, $password)
     {
         try {

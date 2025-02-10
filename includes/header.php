@@ -16,6 +16,13 @@
             <a href="#" class="text-sm/6 font-semibold text-gray-900">Company</a>
         </div> -->
     <div class="flex flex-1 justify-end">
-        <a href="?page=login" class="text-sm/6 font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+        <?php
+        if (isset($_SESSION['user_id'])) {
+            echo "<a href='?page=logout' class='text-sm/6 font-semibold text-gray-900'>Log out <span aria-hidden='true'>&rarr;</span></a>";
+        } else {
+            echo "<a href='?page=login' class='text-sm/6 font-semibold text-gray-900'>Log in <span aria-hidden='true'>&rarr;</span></a>";
+        }
+        ?>
+
     </div>
 </nav>

@@ -1,8 +1,15 @@
+<?php
+if (isset($_SESSION['user_id'])) {
+    header('Location: index.php?page=dashboard');
+    exit;
+}
+?>
+
 <div class="font-[sans-serif]">
     <div class="min-h-screen flex fle-col items-center justify-center py-6 px-4 mx-auto">
         <div class="flex flex-row items-center justify-around gap-6 max-w-6xl w-full">
             <div class="border border-gray-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto min-w-1/2">
-                <form class="space-y-4">
+                <form class="space-y-4" action="index.php?page=login" method="POST">
                     <div class="mb-8">
                         <h3 class="text-gray-800 text-3xl font-bold">Sign in</h3>
                         <p class="text-gray-500 text-sm mt-4 leading-relaxed">Sign in to your account and explore your notes.</p>
@@ -54,13 +61,78 @@
                     </div> -->
 
                     <div class="!mt-8">
-                        <button type="button" class="w-full shadow-xl py-2.5 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                        <button type="submit" class="w-full shadow-xl py-2.5 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
                             Sign in
                         </button>
                     </div>
 
                     <p class="text-sm !mt-8 text-center text-gray-500">Don't have an account <a href="?page=register" class="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">Register here</a></p>
                 </form>
+
+                <script>
+                    const passwordValidator = () => {
+                        const passwordInput = document.querySelector('input[name="user_password"]');
+                        const password = passwordInput.value;
+
+                        if (password.length < 8) {
+                            showToast('error', 'Password must be at least 8 characters long.');
+                            passwordInput.focus();
+                            event.preventDefault();
+                            return;
+                        }
+
+                        const hasUpperCase = /[A-Z]/.test(password);
+                        const hasLowerCase = /[a-z]/.test(password);
+                        const hasNumber = /\d/.test(password);
+                        const hasSpecialChar = /[!@#$%^&*]/.test(password);
+
+                        if (!(hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar)) {
+                            showToast('error', 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+                            passwordInput.focus();
+                            event.preventDefault();
+                            return;
+                        }
+
+                        // if (containsSequence(password)) {
+                        //     alert('Password cannot contain simple sequences or repeated patterns like "1234", "abcd", or "1111".');
+                        //     passwordInput.focus();
+                        //     event.preventDefault();
+                        //     return;
+                        // }
+
+                        // function containsSequence(password) {
+                        //     for (let i = 0; i < password.length - 2; i++) {
+                        //         const char1 = password.charCodeAt(i);
+                        //         const char2 = password.charCodeAt(i + 1);
+                        //         const char3 = password.charCodeAt(i + 2);
+
+                        //         if ((char2 === char1 + 1 && char3 === char2 + 1) || (char2 === char1 - 1 && char3 === char2 - 1)) {
+                        //             return true;
+                        //         }
+
+                        //         if (char1 === char2 && char2 === char3) {
+                        //             return true;
+                        //         }
+                        //     }
+                        //     return false;
+                        // }
+                    }
+                    document.querySelector('form').addEventListener('submit', function(event) {
+                        const emailInput = document.querySelector('input[name="user_email"]');
+                        const passwordInput = document.querySelector('input[name="user_password"]');
+
+                        const email = emailInput.value.trim();
+                        const password = passwordInput.value;
+
+                        if (!email || !password) {
+                            showToast('error', 'Please fill in all fields.');
+                            event.preventDefault();
+                            return;
+                        }
+
+                        passwordValidator();
+                    });
+                </script>
             </div>
             <div class="hidden md:flex max-md:mt-8 w-1/2">
                 <img src="./assets/images/login.svg" class="w-full aspect-[71/50] max-md:w-4/5 mx-auto block object-cover" alt="Dining Experience" />
