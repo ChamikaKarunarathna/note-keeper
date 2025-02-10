@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,9 +13,6 @@
 
     <!-- Tailwind CSS CDN -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-
-    <!-- Flowbite CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -20,12 +21,26 @@
     </header>
 
     <main>
+        <!-- Toast container -->
+        <div id="toast-container" class="fixed bottom-5 right-5 z-50"></div>
         <?php require './routes.php' ?>
     </main>
 
-    <!-- Flowbite Script Start -->
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.js"></script>
-    <!-- Flowbite Script End -->
+
+    <!-- The toast message script -->
+    <script src="assets/js/toast-message.js"></script>
+
+    <?php
+    if (isset($_SESSION['toast'])) {
+        $toast = $_SESSION['toast'];
+        echo "<script>
+            window.onload = function() {
+                showToast('{$toast['type']}', '{$toast['message']}');
+            };
+        </script>";
+        unset($_SESSION['toast']);
+    }
+    ?>
 </body>
 
 </html>
