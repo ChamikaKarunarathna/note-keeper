@@ -6,7 +6,7 @@
                 src="./assets/images/note-keeper-logo.png"
                 class="h-8 w-auto"
                 alt="NoteKeeper Logo" />
-            <span class="hidden lg:flex self-center text-2xl font-semibold whitespace-nowrap">NoteKeeper</span>
+            <span class="hidden lg:flex self-center text-2xl font-semibold whitespace-nowrap text-[#0c142d]">NoteKeeper</span>
         </a>
     </div>
     <!-- <div class="hidden lg:flex lg:gap-x-12">
