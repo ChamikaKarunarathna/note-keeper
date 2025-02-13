@@ -84,45 +84,14 @@ if (!$note) {
         </div>
     </div>
 </div>
+<script>
+    const editNote = (id) => {
+        window.location.href = `index.php?page=edit-note&id=${id}`;
+    };
 
-
-<!-- <div class="bg-white max-h-screen">
-    <div class="relative isolate px-6 pt-14 lg:px-8 max-h-screens">
-        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-            <div class="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-        </div>
-        <div class="mx-auto max-w-screen-xl my-auto w-full h-full relative">
-            <div class="max-h-[calc(100vh-80px)] flex flex-col items-start justify-start py-6 px-4 mx-auto w-full h-screen">
-                <a href="?page=dashboard">
-                    &larr; Back to Dashboard
-                </a>
-
-                <div class="flex flex-col items-start justify-start gap-6 w-full mt-8">
-                    <div class="flex flex-row items-start justify-between w-full gap-6">
-                        <h2 class="text-2xl font-bold mb-4"><?php echo htmlspecialchars($note['title']); ?></h2>
-                        <button
-                            type="button"
-                            id="noteMenuBtn<?php echo $note['id']; ?>"
-                            class="hover:bg-gray-200 rounded-full p-1.5 cursor-pointer min-w-[28px]"
-                            onclick="toggleNoteMenu(<?php echo $note['id']; ?>, event)">
-                            <img src="./assets/images/icons/menu_dots.svg" alt="Note Menu Icon" class="w-4 h-4" />
-                        </button>
-                    </div>
-                    <p class="text-gray-700 whitespace-pre-line"><?php echo nl2br(htmlspecialchars($note['content'])); ?></p>
-                </div>
-
-            </div>
-            <a href="?page=create-note">
-                <button
-                    type="button"
-                    class="absolute bottom-0 right-0 rounded-full bg-indigo-600 p-3.5 md:px-3.5 md:py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 cursor-pointer flex flex-row gap-2 items-center shadow-xl">
-                    <img src="./assets/images/icons/add.svg" alt="Create a Note Icon" class="w-4 h-4" />
-                    <span class="max-md:hidden">Create a Note</span>
-                </button>
-            </a>
-        </div>
-        <div class="absolute inset-x-0 -z-10 transform-gpu overflow-hidden blur-3xl bottom-0" aria-hidden="true">
-            <div class="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-        </div>
-    </div>
-</div> -->
+    const deleteNote = (id) => {
+        if (confirm("Are you sure you want to delete this note? This action cannot be undone.")) {
+            window.location.href = `index.php?page=delete-note&id=${id}`;
+        }
+    };
+</script>

@@ -31,6 +31,13 @@ switch ($page) {
     case 'view-note':
         include 'views/notes/view-note.php';
         break;
+    case 'edit-note':
+        $noteController->updateNote();
+        include 'views/notes/edit-note.php';
+        break;
+    case 'delete-note':
+        $noteController->deleteNote();
+        break;
     default:
         include 'views/404.php';
         break;
