@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
                     <?php
                     for ($i = 0; $i < 3; $i++) {
                     ?>
-
+                        <!-- A card design for show a note -->
                         <div class="w-full min-h-[160px] max-w-[350px] border border-solid border-black rounded-2xl p-4 hover:shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] flex flex-col items-start align-start gap-2 bg-[rgba(255,255,255,0.4)] relative">
                             <span class="text-xl font-semibold line-clamp-1">Note Title</span>
                             <div class="text-[12px] line-clamp-5 mb-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor nisi accusantium quibusdam ducimus officiis consequuntur explicabo minima. Eos ullam tenetur aperiam! Cumque veniam, omnis nam eum repellat aliquam illo dolorum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor nisi accusantium quibusdam ducimus officiis consequuntur explicabo minima. Eos ullam tenetur aperiam! Cumque veniam, omnis nam eum repellat aliquam illo dolorum!</div>
@@ -51,12 +51,14 @@ if (!isset($_SESSION['user_id'])) {
 
                 </div>
             </div>
-            <button
-                type="button"
-                class="absolute bottom-0 right-0 rounded-full bg-indigo-600 p-3.5 md:px-3.5 md:py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 cursor-pointer flex flex-row gap-2 items-center shadow-xl">
-                <img src="./assets/images/icons/add.svg" alt="Create a Note Icon" class="w-4 h-4" />
-                <span class="max-md:hidden">Create a Note</span>
-            </button>
+            <a href="?page=create-note">
+                <button
+                    type="button"
+                    class="absolute bottom-0 right-0 rounded-full bg-indigo-600 p-3.5 md:px-3.5 md:py-2.5 text-sm font-semibold text-white hover:bg-indigo-500 cursor-pointer flex flex-row gap-2 items-center shadow-xl">
+                    <img src="./assets/images/icons/add.svg" alt="Create a Note Icon" class="w-4 h-4" />
+                    <span class="max-md:hidden">Create a Note</span>
+                </button>
+            </a>
         </div>
         <div class="absolute inset-x-0 -z-10 transform-gpu overflow-hidden blur-3xl bottom-0" aria-hidden="true">
             <div class="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
