@@ -28,6 +28,9 @@ switch ($page) {
         $noteController->createNote();
         include 'views/notes/create-note.php';
         break;
+    case 'view-note':
+        include 'views/notes/view-note.php';
+        break;
     default:
         include 'views/404.php';
         break;

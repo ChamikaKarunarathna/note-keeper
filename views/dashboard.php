@@ -3,6 +3,11 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: index.php?page=home');
     exit;
 }
+
+// fetching the notes
+$user_id = $_SESSION['user_id'];
+$noteModel = new Note($db);
+$notes = $noteModel->getUserNotes($user_id);
 ?>
 <div class="bg-white max-h-screen">
     <div class="relative isolate px-6 pt-14 lg:px-8 max-h-screens">
@@ -11,40 +16,51 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         <div class="mx-auto max-w-screen-xl my-auto w-full h-full relative">
             <div class="max-h-[calc(100vh-80px)] flex flex-col items-center justify-start py-6 px-4 mx-auto w-full h-screen">
-                <div class="flex flex-row flex-wrap items-start justify-between gap-6 w-full max-h-[calc(100vh-80px)] overflow-y-auto">
+                <div class="flex flex-row flex-wrap items-start justify-around gap-6 w-full max-h-[calc(100vh-80px)] overflow-y-auto">
 
                     <?php
-                    for ($i = 0; $i < 3; $i++) {
+                    if ($notes) {
+                        foreach ($notes as $note) {
                     ?>
-                        <!-- A card design for show a note -->
-                        <div class="w-full min-h-[160px] max-w-[350px] border border-solid border-black rounded-2xl p-4 hover:shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] flex flex-col items-start align-start gap-2 bg-[rgba(255,255,255,0.4)] relative">
-                            <span class="text-xl font-semibold line-clamp-1">Note Title</span>
-                            <div class="text-[12px] line-clamp-5 mb-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor nisi accusantium quibusdam ducimus officiis consequuntur explicabo minima. Eos ullam tenetur aperiam! Cumque veniam, omnis nam eum repellat aliquam illo dolorum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor nisi accusantium quibusdam ducimus officiis consequuntur explicabo minima. Eos ullam tenetur aperiam! Cumque veniam, omnis nam eum repellat aliquam illo dolorum!</div>
+                            <!-- Note Card -->
+                            <div class="relative z-10 w-full min-h-[160px] max-w-[350px] border border-solid border-black rounded-2xl p-4 hover:shadow-md flex flex-col items-start gap-2 bg-[rgba(255,255,255,0.4)]">
+                                <a href="index.php?page=view-note&id=<?php echo $note['id']; ?>" class="w-full h-full block">
+                                    <span class="text-xl font-semibold line-clamp-1"><?php echo htmlspecialchars($note['title']); ?></span>
+                                    <div class="text-[12px] line-clamp-5 mb-6"><?php echo nl2br(htmlspecialchars($note['content'])); ?></div>
+                                </a>
 
-                            <button
-                                type="button"
-                                id="noteMenuBtn<?php echo $i; ?>"
-                                class="absolute bottom-2 right-2 hover:bg-gray-200 rounded-full p-1.5 cursor-pointer"
-                                onclick="toggleNoteMenu(<?php echo $i; ?>)">
-                                <img src="./assets/images/icons/menu_dots.svg" alt="Note Menu Icon" class="w-4 h-4" />
-                            </button>
+                                <button
+                                    type="button"
+                                    id="noteMenuBtn<?php echo $note['id']; ?>"
+                                    class="absolute bottom-2 right-2 hover:bg-gray-200 rounded-full p-1.5 cursor-pointer z-20"
+                                    onclick="toggleNoteMenu(<?php echo $note['id']; ?>, event)">
+                                    <img src="./assets/images/icons/menu_dots.svg" alt="Note Menu Icon" class="w-4 h-4" />
+                                </button>
 
-                            <button
-                                type="button"
-                                id="editNoteBtn<?php echo $i; ?>"
-                                class="absolute bottom-19 right-2 rounded-full bg-indigo-100 px-2.5 py-1.5 text-[12px] font-semibold text-black hover:bg-indigo-200 cursor-pointer flex flex-row gap-2 items-center hidden">
-                                <img src="./assets/images/icons/edit.svg" alt="Edit Note Icon" class="w-3 h-3" />
-                                <span>Edit Note</span>
-                            </button>
+                                <!-- Hidden Menu Buttons -->
+                                <div id="noteMenu<?php echo $note['id']; ?>" class="absolute bottom-12 right-2 hidden flex flex-col gap-2 bg-transparent">
+                                    <button
+                                        type="button"
+                                        class="rounded-full bg-indigo-100 p-1.5 md:px-2.5 md:py-1.5 text-[12px] font-semibold text-black hover:bg-indigo-200 cursor-pointer flex flex-row gap-2 items-center"
+                                        onclick="editNote(<?php echo $note['id']; ?>)">
+                                        <img src="./assets/images/icons/edit.svg" alt="Edit Note Icon" class="w-3 h-3" />
+                                        <span class="max-md:hidden">Edit Note</span>
+                                    </button>
 
-                            <button
-                                type="button"
-                                id="deleteNoteBtn<?php echo $i; ?>"
-                                class="absolute bottom-10 right-2 rounded-full bg-red-500 px-2.5 py-1.5 text-[12px] font-semibold text-white hover:bg-red-600 cursor-pointer flex flex-row gap-2 items-center hidden">
-                                <img src="./assets/images/icons/delete.svg" alt="Delete Note Icon" class="w-3 h-3" />
-                                <span>Delete Note</span>
-                            </button>
-                        </div>
+                                    <button
+                                        type="button"
+                                        class="rounded-full bg-red-500 p-1.5 md:px-2.5 md:py-1.5 text-[12px] font-semibold text-white hover:bg-red-600 cursor-pointer flex flex-row gap-2 items-center"
+                                        onclick="deleteNote(<?php echo $note['id']; ?>)">
+                                        <img src="./assets/images/icons/delete.svg" alt="Delete Note Icon" class="w-3 h-3" />
+                                        <span class="max-md:hidden">Delete Note</span>
+                                    </button>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <p class='text-gray-500 text-lg'>No notes found. Click <span class="md:hidden">'+'</span> <span class="max-md:hidden">'Create a Note'</span> to add your first note.</p>
                     <?php
                     }
                     ?>
@@ -67,10 +83,12 @@ if (!isset($_SESSION['user_id'])) {
 </div>
 
 <script>
-    const toggleNoteMenu = (id) => {
-        editNoteBtn = document.getElementById(`editNoteBtn${id}`);
-        deleteNoteBtn = document.getElementById(`deleteNoteBtn${id}`);
-        editNoteBtn.classList.toggle('hidden');
-        deleteNoteBtn.classList.toggle('hidden');
-    }
+    const toggleNoteMenu = (id, event) => {
+        event.stopPropagation(); // Stop click event from bubbling to <a>
+
+        let noteMenu = document.getElementById(`noteMenu${id}`);
+        if (noteMenu) {
+            noteMenu.classList.toggle('hidden');
+        }
+    };
 </script>
