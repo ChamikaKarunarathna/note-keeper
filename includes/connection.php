@@ -5,6 +5,10 @@ class Database
     private $db_name = 'note_keeper_db';
     private $username = 'root';
     private $password = '';
+    // private $host = 'sql212.infinityfree.com';
+    // private $db_name = 'if0_38307975_note_keeper_db';
+    // private $username = 'if0_38307975';
+    // private $password = 'q0fgZClTGZbcg7V';
     private static $instance = null;
     public $connection;
 
