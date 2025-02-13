@@ -91,4 +91,14 @@ $notes = $noteModel->getUserNotes($user_id);
             noteMenu.classList.toggle('hidden');
         }
     };
+
+    const editNote = (id) => {
+        window.location.href = `index.php?page=edit-note&id=${id}`;
+    };
+
+    const deleteNote = (noteId) => {
+        if (confirm("Are you sure you want to delete this note? This action cannot be undone.")) {
+            window.location.href = `index.php?page=delete-note&id=${noteId}`;
+        }
+    };
 </script>

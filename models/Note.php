@@ -54,4 +54,33 @@ class Note
             return false;
         }
     }
+
+    public function update($note_id, $user_id, $title, $content)
+    {
+        try {
+            $stmt = $this->db->prepare("UPDATE notes SET title = :title, content = :content WHERE id = :note_id AND user_id = :user_id");
+            $stmt->bindParam(':note_id', $note_id);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $content);
+
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error updating note: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function delete($note_id, $user_id) {
+        try {
+            $stmt = $this->db->prepare("DELETE FROM notes WHERE id = :note_id AND user_id = :user_id");
+            $stmt->bindParam(':note_id', $note_id);
+            $stmt->bindParam(':user_id', $user_id);
+    
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error deleting note: " . $e->getMessage();
+            return false;
+        }
+    }
 }
